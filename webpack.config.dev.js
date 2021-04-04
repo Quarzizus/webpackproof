@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   entry: "./src/index.js",
@@ -11,7 +12,7 @@ module.exports = {
     assetModuleFilename: "assets/images/[hash][ext][query]",
   },
   mode: "development",
-  watch: true,
+  devtool: "source-map",
   resolve: {
     extensions: [".js"],
   },
@@ -49,6 +50,12 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    compress: true,
+    historyApiFallback: true,
+    port: 3006,
+    open: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
@@ -65,5 +72,6 @@ module.exports = {
         },
       ],
     }),
+    new BundleAnalyzerPlugin(),
   ],
 };
